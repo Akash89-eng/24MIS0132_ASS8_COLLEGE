@@ -11,7 +11,7 @@ pipeline {
         stage('Clone Code') {
             steps {
                 git branch: 'main',
-                    url: 'YOUR_Q3_GITHUB_REPOSITORY_URL'
+                    url: 'https://github.com/Akash89-eng/24MIS0132_ASS8_COLLEGE.git'
             }
         }
 
