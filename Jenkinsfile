@@ -3,7 +3,8 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = "akash0708/college-portal"
-        PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
+        DOCKER_PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin"
+        PATH = "${DOCKER_PATH};${env.PATH}"
     }
 
     stages {
@@ -12,13 +13,6 @@ pipeline {
             steps {
                 git branch: 'main',
                     url: 'https://github.com/Akash89-eng/24MIS0132_ASS8_COLLEGE.git'
-            }
-        }
-
-        stage('Check Docker') {
-            steps {
-                bat 'where docker'
-                bat 'docker --version'
             }
         }
 
@@ -37,7 +31,7 @@ pipeline {
                         passwordVariable: 'PASS'
                     )
                 ]) {
-                    bat 'echo %PASS% | docker login -u %USER% --password-stdin'
+                    bat 'docker login -u %USER% -p %PASS%'
                     bat 'docker push %DOCKER_IMAGE%:latest'
                 }
             }
@@ -62,7 +56,7 @@ pipeline {
             }
         }
 
-        stage('Verify Kubernetes') {
+        stage('Verify Deployment') {
             steps {
                 withCredentials([
                     file(
