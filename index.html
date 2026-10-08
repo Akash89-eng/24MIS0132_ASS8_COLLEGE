@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>College Department Information Portal</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3a8a, #4f46e5);
+            color: white;
+            padding: 45px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+        }
+
+        header p {
+            font-size: 18px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            color: #4f46e5;
+            margin-top: 0;
+        }
+
+        ul {
+            line-height: 1.8;
+        }
+
+        .contact {
+            margin-top: 25px;
+            background: #eef2ff;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #1e293b;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>College Department Information Portal</h1>
+    <p>Department of Computer Science and Engineering</p>
+</header>
+
+<div class="container">
+
+    <div class="grid">
+
+        <div class="card">
+            <h2>Department</h2>
+            <p>
+                The Department of Computer Science and Engineering
+                provides education in programming, software engineering,
+                artificial intelligence and cloud technologies.
+            </p>
+        </div>
+
+        <div class="card">
+            <h2>Faculty</h2>
+            <ul>
+                <li>Dr. Arun Kumar - Professor</li>
+                <li>Dr. Priya Sharma - Associate Professor</li>
+                <li>Mr. Rahul Kumar - Assistant Professor</li>
+                <li>Ms. Divya - Assistant Professor</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>Programs</h2>
+            <ul>
+                <li>B.Tech Computer Science</li>
+                <li>B.Tech AI & Data Science</li>
+                <li>M.Tech Computer Science</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>Laboratories</h2>
+            <ul>
+                <li>Programming Laboratory</li>
+                <li>Artificial Intelligence Lab</li>
+                <li>Database Laboratory</li>
+                <li>Cloud Computing Lab</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="card contact">
+        <h2>Contact Information</h2>
+        <p><strong>Email:</strong> cse@college.edu</p>
+        <p><strong>Phone:</strong> +91 9876543210</p>
+        <p><strong>Office:</strong> CSE Block, Main Campus</p>
+    </div>
+
+</div>
+
+<footer>
+    © 2026 College Department Information Portal
+</footer>
+
+</body>
+</html>
