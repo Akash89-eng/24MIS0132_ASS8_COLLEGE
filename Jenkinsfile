@@ -3,7 +3,8 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = "akash0708/college-portal"
-        PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
+        DOCKER_PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin"
+        PATH = "${DOCKER_PATH};${env.PATH}"
     }
 
     stages {
@@ -37,7 +38,7 @@ pipeline {
                         passwordVariable: 'PASS'
                     )
                 ]) {
-                    bat 'docker login -u %USER% -p %PASS%'
+                    bat 'echo %PASS% | docker login -u %USER% --password-stdin'
                     bat 'docker push %DOCKER_IMAGE%:latest'
                 }
             }
@@ -52,11 +53,11 @@ pipeline {
                     )
                 ]) {
                     bat '''
-                    set KUBECONFIG=%KUBECONFIG%
+                        set KUBECONFIG=%KUBECONFIG%
 
-                    kubectl apply -f deployment.yaml --validate=false
+                        kubectl apply -f deployment.yaml --validate=false
 
-                    kubectl rollout status deployment/college-portal
+                        kubectl rollout status deployment/college-portal
                     '''
                 }
             }
@@ -64,9 +65,25 @@ pipeline {
 
         stage('Verify Kubernetes') {
             steps {
-                bat 'kubectl get deployment'
-                bat 'kubectl get pods'
-                bat 'kubectl get service'
+                withCredentials([
+                    file(
+                        credentialsId: 'kuberconfig',
+                        variable: 'KUBECONFIG'
+                    )
+                ]) {
+                    bat '''
+                        set KUBECONFIG=%KUBECONFIG%
+
+                        echo ===== DEPLOYMENT =====
+                        kubectl get deployment college-portal
+
+                        echo ===== PODS =====
+                        kubectl get pods -l app=college-portal
+
+                        echo ===== SERVICE =====
+                        kubectl get service college-portal-service
+                    '''
+                }
             }
         }
     }
