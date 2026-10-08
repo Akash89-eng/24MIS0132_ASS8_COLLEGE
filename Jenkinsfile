@@ -3,8 +3,7 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = "akash0708/college-portal"
-        DOCKER_PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin"
-        PATH = "${DOCKER_PATH};${env.PATH}"
+        PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
     }
 
     stages {
@@ -12,7 +11,7 @@ pipeline {
         stage('Clone Code') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/Akash89-eng/24MIS0132_ASS8_COLLEGE.git'
+                    url: 'YOUR_Q3_GITHUB_REPOSITORY_URL'
             }
         }
 
@@ -38,7 +37,7 @@ pipeline {
                         passwordVariable: 'PASS'
                     )
                 ]) {
-                    bat 'echo %PASS% | docker login -u %USER% --password-stdin'
+                    bat 'docker login -u %USER% -p %PASS%'
                     bat 'docker push %DOCKER_IMAGE%:latest'
                 }
             }
@@ -53,17 +52,17 @@ pipeline {
                     )
                 ]) {
                     bat '''
-                        set KUBECONFIG=%KUBECONFIG%
+                    set KUBECONFIG=%KUBECONFIG%
 
-                        kubectl apply -f deployment.yaml --validate=false
+                    kubectl apply -f deployment.yaml --validate=false
 
-                        kubectl rollout status deployment/college-portal
+                    kubectl rollout status deployment/college-portal
                     '''
                 }
             }
         }
 
-        stage('Verify Kubernetes') {
+       stage('Verify Kubernetes') {
             steps {
                 withCredentials([
                     file(
@@ -86,5 +85,7 @@ pipeline {
                 }
             }
         }
+    }
+}
     }
 }
