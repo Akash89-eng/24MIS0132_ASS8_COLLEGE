@@ -37,7 +37,7 @@ pipeline {
                         passwordVariable: 'PASS'
                     )
                 ]) {
-                    bat 'docker login -u %USER% -p %PASS%'
+                    bat 'echo %PASS% | docker login -u %USER% --password-stdin'
                     bat 'docker push %DOCKER_IMAGE%:latest'
                 }
             }
@@ -52,17 +52,17 @@ pipeline {
                     )
                 ]) {
                     bat '''
-                    set KUBECONFIG=%KUBECONFIG%
+                        set KUBECONFIG=%KUBECONFIG%
 
-                    kubectl apply -f deployment.yaml --validate=false
+                        kubectl apply -f deployment.yaml --validate=false
 
-                    kubectl rollout status deployment/college-portal
+                        kubectl rollout status deployment/college-portal
                     '''
                 }
             }
         }
 
-       stage('Verify Kubernetes') {
+        stage('Verify Kubernetes') {
             steps {
                 withCredentials([
                     file(
@@ -85,7 +85,5 @@ pipeline {
                 }
             }
         }
-    }
-}
     }
 }
